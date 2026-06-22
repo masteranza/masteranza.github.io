@@ -1,0 +1,45 @@
+---
+const name = 'Michał Mandrysz';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={`${name}'s personal website`} />
+    <title>{name}</title>
+    <style>
+      :global(*) {
+        box-sizing: border-box;
+      }
+
+      :global(body) {
+        margin: 0;
+        background: #faf9f6;
+        color: #171717;
+        font-family: Georgia, 'Times New Roman', serif;
+      }
+
+      main {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        padding: 2rem;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(3.5rem, 12vw, 9rem);
+        font-weight: 400;
+        letter-spacing: -0.06em;
+        line-height: 0.9;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>{name}</h1>
+    </main>
+  </body>
+</html>
