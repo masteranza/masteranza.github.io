@@ -28,19 +28,18 @@ const name = 'Michał Mandrysz';
         padding-bottom: 1rem;
       }
 
-      .hero {
-        position: relative;
-        display: grid;
-        min-height: 100svh;
-        place-items: center;
-        padding: 2rem;
+      .site-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: min(72rem, calc(100% - 2rem));
+        margin: 0 auto;
+        padding: 1.5rem 0;
       }
 
       .site-nav {
-        position: absolute;
-        bottom: 2rem;
         display: flex;
-        gap: 1.5rem;
+        gap: 1.25rem;
       }
 
       .site-nav a {
@@ -58,22 +57,31 @@ const name = 'Michał Mandrysz';
 
       h1 {
         margin: 0;
-        font-size: clamp(3.5rem, 12vw, 9rem);
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
         font-weight: 400;
-        letter-spacing: -0.06em;
-        line-height: 0.9;
+        letter-spacing: -0.025em;
+      }
+
+      @media (max-width: 520px) {
+        .site-header {
+          width: calc(100% - 1.5rem);
+        }
+
+        .site-nav a {
+          font-size: 0.65rem;
+        }
       }
     </style>
   </head>
   <body>
+    <header class="site-header">
+      <h1 id="site-title">{name}</h1>
+      <nav class="site-nav" aria-label="Sections">
+        <a href="#blog">Blog</a>
+        <a href="#archive">Archive</a>
+      </nav>
+    </header>
     <main>
-      <section class="hero" aria-labelledby="site-title">
-        <h1 id="site-title">{name}</h1>
-        <nav class="site-nav" aria-label="Sections">
-          <a href="#blog">Blog ↓</a>
-          <a href="#archive">Archive ↓</a>
-        </nav>
-      </section>
       <BlogPreview />
       <Archive />
     </main>
