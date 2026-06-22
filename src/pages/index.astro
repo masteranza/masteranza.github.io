@@ -1,4 +1,6 @@
 ---
+import Archive from '../components/Archive.astro';
+
 const name = 'Michał Mandrysz';
 ---
 
@@ -22,10 +24,30 @@ const name = 'Michał Mandrysz';
       }
 
       main {
+        padding-bottom: 1rem;
+      }
+
+      .hero {
+        position: relative;
         display: grid;
-        min-height: 100vh;
+        min-height: 100svh;
         place-items: center;
         padding: 2rem;
+      }
+
+      .archive-jump {
+        position: absolute;
+        bottom: 2rem;
+        color: #5b574f;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      .archive-jump:hover {
+        color: #171717;
       }
 
       h1 {
@@ -39,7 +61,11 @@ const name = 'Michał Mandrysz';
   </head>
   <body>
     <main>
-      <h1>{name}</h1>
+      <section class="hero" aria-labelledby="site-title">
+        <h1 id="site-title">{name}</h1>
+        <a class="archive-jump" href="#archive">Archive ↓</a>
+      </section>
+      <Archive />
     </main>
   </body>
 </html>

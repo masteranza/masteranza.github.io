@@ -1,0 +1,33 @@
+---
+import Archive from '../components/Archive.astro';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Selected projects and writing by Michał Mandrysz."
+    />
+    <title>Archive — Michał Mandrysz</title>
+    <style>
+      :global(*) {
+        box-sizing: border-box;
+      }
+
+      :global(body) {
+        margin: 0;
+        background: #faf9f6;
+        color: #171717;
+        font-family: Georgia, 'Times New Roman', serif;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <Archive standalone />
+    </main>
+  </body>
+</html>

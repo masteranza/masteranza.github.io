@@ -1,0 +1,227 @@
+---
+import { popularPosts, projects } from '../data/archive';
+
+interface Props {
+  standalone?: boolean;
+}
+
+const { standalone = false } = Astro.props;
+---
+
+<section class:list={['archive', { standalone }]} id="archive" aria-labelledby="archive-title">
+  <header class="archive-header">
+    {standalone && <a class="back" href="/">← Michał Mandrysz</a>}
+    <p class="eyebrow">Selected work and writing</p>
+    <h2 id="archive-title">Archive</h2>
+    <p class="intro">
+      Projects and frequently discussed posts from{' '}
+      <a href="https://masteranza.wordpress.com/">Ranza Research</a>, published between 2007
+      and 2022.
+    </p>
+  </header>
+
+  <div class="archive-grid">
+    <div>
+      <h3>Projects</h3>
+      <ol class="project-list">
+        {projects.map((project) => (
+          <li>
+            <div class="item-heading">
+              <a href={project.postUrl}>{project.title}</a>
+              <span>{project.year}</span>
+            </div>
+            <p>{project.description}</p>
+            {project.projectUrl && (
+              <a class="project-link" href={project.projectUrl}>View project ↗</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div>
+      <h3>Most discussed</h3>
+      <p class="method">Ranked by public WordPress comment count.</p>
+      <ol class="post-list">
+        {popularPosts.map((post) => (
+          <li>
+            <a href={post.url}>{post.title}</a>
+            <div class="post-meta">
+              <span>{post.year}</span>
+              <span>{post.comments} comments</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+
+  {!standalone && <a class="permalink" href="/archive/">Open Archive as a page →</a>}
+</section>
+
+<style>
+  .archive {
+    width: min(72rem, calc(100% - 2rem));
+    margin: 0 auto 1rem;
+    padding: clamp(2rem, 6vw, 5rem);
+    border: 1px solid #d7d3ca;
+    border-radius: 1rem;
+    background: #f1efe9;
+  }
+
+  .archive.standalone {
+    margin-block: 1rem;
+  }
+
+  .archive-header {
+    max-width: 44rem;
+  }
+
+  .back,
+  .eyebrow,
+  .method,
+  .post-meta,
+  .project-link,
+  .permalink {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .back {
+    display: inline-block;
+    margin-bottom: 4rem;
+    color: #5b574f;
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.75rem;
+    color: #6a665e;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 400;
+    letter-spacing: -0.055em;
+    line-height: 0.9;
+  }
+
+  .intro {
+    margin: 1.5rem 0 0;
+    color: #4e4a44;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    line-height: 1.55;
+  }
+
+  a {
+    color: inherit;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  a:hover {
+    color: #765b2f;
+  }
+
+  .archive-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.8fr);
+    gap: clamp(3rem, 8vw, 8rem);
+    margin-top: clamp(4rem, 8vw, 7rem);
+  }
+
+  h3 {
+    margin: 0 0 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    border-top: 1px solid #d0ccc3;
+  }
+
+  .project-list li {
+    padding: 1.5rem 0 1.75rem;
+  }
+
+  .item-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+
+  .item-heading span,
+  .post-meta {
+    color: #79746b;
+    font-size: 0.75rem;
+  }
+
+  .project-list p {
+    max-width: 40rem;
+    margin: 0.75rem 0;
+    color: #555149;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .project-link,
+  .permalink {
+    font-size: 0.8rem;
+  }
+
+  .method {
+    margin: -0.75rem 0 1.5rem;
+    color: #79746b;
+    font-size: 0.75rem;
+  }
+
+  .post-list li {
+    padding: 1.25rem 0;
+  }
+
+  .post-list > li > a {
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+
+  .post-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.6rem;
+  }
+
+  .permalink {
+    display: inline-block;
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 720px) {
+    .archive-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .archive {
+      width: calc(100% - 1rem);
+      padding: 2rem 1.25rem;
+    }
+
+    .back {
+      margin-bottom: 3rem;
+    }
+  }
+</style>
