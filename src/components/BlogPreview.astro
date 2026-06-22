@@ -1,0 +1,140 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('en', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
+---
+
+<section class="blog" id="blog" aria-labelledby="blog-title">
+  <header>
+    <p class="eyebrow">Recent notes</p>
+    <h2 id="blog-title">Blog</h2>
+  </header>
+
+  <ol>
+    {posts.map((post) => (
+      <li>
+        <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+        <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+        <p>{post.data.description}</p>
+      </li>
+    ))}
+  </ol>
+
+  <a class="all-posts" href="/blog/">All posts →</a>
+</section>
+
+<style>
+  .blog {
+    width: min(72rem, calc(100% - 2rem));
+    margin: 0 auto 1rem;
+    padding: clamp(2rem, 6vw, 5rem);
+    border-radius: 1rem;
+    background: #191918;
+    color: #f7f4ed;
+  }
+
+  .eyebrow,
+  time,
+  .all-posts {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.75rem;
+    color: #aaa69d;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 400;
+    letter-spacing: -0.055em;
+    line-height: 0.9;
+  }
+
+  ol {
+    margin: clamp(4rem, 8vw, 7rem) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.25fr) minmax(0, 0.75fr);
+    column-gap: 2rem;
+    padding: 1.75rem 0;
+    border-top: 1px solid #403e3a;
+  }
+
+  time {
+    color: #aaa69d;
+    font-size: 0.75rem;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+  }
+
+  h3 a,
+  .all-posts {
+    color: inherit;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  li p {
+    grid-column: 2;
+    max-width: 42rem;
+    margin: 0.75rem 0 0;
+    color: #c9c5bc;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .all-posts {
+    display: inline-block;
+    margin-top: 2rem;
+    font-size: 0.8rem;
+  }
+
+  a:hover {
+    color: #d7b779;
+  }
+
+  @media (max-width: 620px) {
+    .blog {
+      width: calc(100% - 1rem);
+      padding: 2rem 1.25rem;
+    }
+
+    li {
+      grid-template-columns: 1fr;
+    }
+
+    h3 {
+      margin-top: 0.75rem;
+    }
+
+    li p {
+      grid-column: 1;
+    }
+  }
+</style>

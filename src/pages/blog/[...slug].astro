@@ -1,0 +1,60 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const formattedDate = new Intl.DateTimeFormat('en', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+}).format(post.data.pubDate);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={post.data.description} />
+    <title>{post.data.title} — Michał Mandrysz</title>
+    <style>
+      :global(*) { box-sizing: border-box; }
+      :global(body) { margin: 0; background: #faf9f6; color: #171717; font-family: Georgia, 'Times New Roman', serif; }
+      main { width: min(46rem, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 7rem; }
+      .back, time { font-family: ui-sans-serif, system-ui, sans-serif; }
+      .back { color: #5b574f; font-size: 0.8rem; text-decoration: none; }
+      article { margin-top: clamp(5rem, 12vw, 9rem); }
+      header { padding-bottom: 2.5rem; border-bottom: 1px solid #d7d3ca; }
+      time { color: #79746b; font-size: 0.75rem; }
+      h1 { margin: 1rem 0; font-size: clamp(3rem, 9vw, 6rem); font-weight: 400; letter-spacing: -0.055em; line-height: 0.95; }
+      .description { margin: 0; color: #555149; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 1.1rem; line-height: 1.6; }
+      .prose { margin-top: 3rem; font-size: clamp(1.1rem, 2vw, 1.25rem); line-height: 1.75; }
+      .prose :global(p) { margin: 0 0 1.5em; }
+      .prose :global(a) { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+      a:hover { color: #765b2f; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="back" href="/blog/">← Blog</a>
+      <article>
+        <header>
+          <time datetime={post.data.pubDate.toISOString()}>{formattedDate}</time>
+          <h1>{post.data.title}</h1>
+          <p class="description">{post.data.description}</p>
+        </header>
+        <div class="prose"><Content /></div>
+      </article>
+    </main>
+  </body>
+</html>

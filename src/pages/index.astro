@@ -1,5 +1,6 @@
 ---
 import Archive from '../components/Archive.astro';
+import BlogPreview from '../components/BlogPreview.astro';
 
 const name = 'Michał Mandrysz';
 ---
@@ -35,9 +36,14 @@ const name = 'Michał Mandrysz';
         padding: 2rem;
       }
 
-      .archive-jump {
+      .site-nav {
         position: absolute;
         bottom: 2rem;
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      .site-nav a {
         color: #5b574f;
         font-family: ui-sans-serif, system-ui, sans-serif;
         font-size: 0.75rem;
@@ -46,7 +52,7 @@ const name = 'Michał Mandrysz';
         text-transform: uppercase;
       }
 
-      .archive-jump:hover {
+      .site-nav a:hover {
         color: #171717;
       }
 
@@ -63,8 +69,12 @@ const name = 'Michał Mandrysz';
     <main>
       <section class="hero" aria-labelledby="site-title">
         <h1 id="site-title">{name}</h1>
-        <a class="archive-jump" href="#archive">Archive ↓</a>
+        <nav class="site-nav" aria-label="Sections">
+          <a href="#blog">Blog ↓</a>
+          <a href="#archive">Archive ↓</a>
+        </nav>
       </section>
+      <BlogPreview />
       <Archive />
     </main>
   </body>
