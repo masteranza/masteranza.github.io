@@ -46,5 +46,3 @@ Run it before a review:
 ```bash
 gblast "6 months ago" 30
 ```
-
-Then inspect the top entries. The smell is not “many files changed”; the smell is “many files changed and nobody can explain why.”
