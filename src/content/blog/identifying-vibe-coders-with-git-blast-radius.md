@@ -1,5 +1,5 @@
 ---
-title: find vibe code with git blast radius
+title: Find vibe code with git blast radius
 description: A tiny git helper for finding commits that touched suspiciously many files.
 pubDate: 2026-06-29
 ---
